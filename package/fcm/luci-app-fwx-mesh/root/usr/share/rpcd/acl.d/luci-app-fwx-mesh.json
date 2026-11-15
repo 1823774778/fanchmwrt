@@ -1,0 +1,10 @@
+{
+	"luci-app-fwx-mesh": {
+		"description": "FanchmWrt mesh overview API (aggregated wifiroam status/topology)",
+		"read": {
+			"ubus": {
+				"wifiroam": [ "status", "topology" ]
+			}
+		}
+	}
+}
