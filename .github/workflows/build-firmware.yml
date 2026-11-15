@@ -7,7 +7,7 @@ on:
       - mesh
     paths:
       - "feeds.conf.default"
-      - "include/target.mk"
+      - "include/default-packages.mk"
       - "package/fcm/**"
       - "feeds_patches/**"
       - ".github/workflows/build-firmware.yml"
@@ -20,11 +20,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  TARGET_CONFIG: |
-    CONFIG_TARGET_x86=y
-    CONFIG_TARGET_x86_64=y
-    CONFIG_TARGET_x86_64_Generic=y
-    CONFIG_TARGET_ROOTFS_PARTSIZE=1024
   SDK_IMAGE: ghcr.io/openwrt/sdk:qualcommax-ipq807x-25.12.6
 
 jobs:
@@ -62,7 +57,6 @@ jobs:
                 bash setup.sh
               fi
 
-              # GitHub mirrors first: git.openwrt.org is slow on runners
               sed -i \
                 -e "s#https://git.openwrt.org/feed/#https://github.com/openwrt/#" \
                 -e "s#https://git.openwrt.org/openwrt/#https://github.com/openwrt/#" \
@@ -92,27 +86,62 @@ jobs:
           path: artifacts/*.apk
           if-no-files-found: warn
 
-      - name: Publish gate log on failure
-        if: failure()
+      - name: Publish gate log
+        if: always()
         run: |
-          set -e
+          set +e
           mkdir -p ci-log
           if [ -f artifacts/pkg-gate.log ]; then
-            (head -n 40 artifacts/pkg-gate.log; echo; echo "=== TAIL ==="; echo; tail -n 400 artifacts/pkg-gate.log) > ci-log/package-gate.log
+            cp artifacts/pkg-gate.log ci-log/package-gate.log
           else
             echo "package gate produced no log" > ci-log/package-gate.log
           fi
           git config user.name "mesh-ci-bot"
           git config user.email "mesh-ci-bot@users.noreply.github.com"
+          git checkout -B ci-logs-pkg
           git add -f ci-log/package-gate.log
           git commit -m "ci: package gate log (run ${GITHUB_RUN_ID})" || true
-          git push --force origin HEAD:ci-logs
+          for i in 1 2 3; do
+            git fetch origin ci-logs-pkg >/dev/null 2>&1 && git rebase origin/ci-logs-pkg >/dev/null 2>&1
+            git push origin HEAD:ci-logs-pkg && break
+            sleep 2
+          done
 
   firmware:
-    name: Firmware image (x86/64)
+    name: Firmware ${{ matrix.id }}
     needs: packages
     runs-on: ubuntu-latest
     timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - id: x86-64
+            desc: x86/64 (Generic)
+            config: |
+              CONFIG_TARGET_x86=y
+              CONFIG_TARGET_x86_64=y
+              CONFIG_TARGET_x86_64_Generic=y
+              CONFIG_TARGET_ROOTFS_PARTSIZE=1024
+          - id: ipq807x
+            desc: Qualcomm IPQ807x (Redmi AX6)
+            config: |
+              CONFIG_TARGET_qualcommax=y
+              CONFIG_TARGET_qualcommax_ipq807x=y
+              CONFIG_TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6=y
+          - id: filogic
+            desc: MediaTek Filogic (Xiaomi AX3000T)
+            config: |
+              CONFIG_TARGET_mediatek=y
+              CONFIG_TARGET_mediatek_filogic=y
+              CONFIG_TARGET_mediatek_filogic_DEVICE_xiaomi_mi-router-ax3000t=y
+          - id: armsr-armv8
+            desc: ARM SystemReady (ARMv8 generic)
+            config: |
+              CONFIG_TARGET_armsr=y
+              CONFIG_TARGET_armsr_armv8=y
+              CONFIG_TARGET_armsr_armv8_DEVICE_generic=y
 
     steps:
       - name: Free disk space
@@ -137,46 +166,72 @@ jobs:
 
       - name: Feeds update and install
         run: |
-          set -o pipefail
+          echo "== feeds update ==" | tee -a build.log
           ./scripts/feeds update -a 2>&1 | tee -a build.log
+          echo "== feeds install ==" | tee -a build.log
           ./scripts/feeds install -a 2>&1 | tee -a build.log
 
-      - name: Configure target and verify mesh packages
+      - name: Configure target
         run: |
-          set -euo pipefail
-          printf '%s\n' "$TARGET_CONFIG" > .config
-          make defconfig
-          ./scripts/diffconfig.sh > defconfig.used 2>/dev/null || true
-          grep -q '^CONFIG_PACKAGE_wifiroam=y' .config || { echo "::error::wifiroam not selected"; exit 1; }
-          grep -q '^CONFIG_PACKAGE_luci-app-wifiroam=y' .config || { echo "::error::luci-app-wifiroam not selected"; exit 1; }
-          grep -q '^CONFIG_PACKAGE_luci-app-fwx-mesh=y' .config || { echo "::error::luci-app-fwx-mesh not selected"; exit 1; }
-          echo "mesh packages selected:"
-          grep -E '^CONFIG_PACKAGE_(wifiroam|luci-app-wifiroam|luci-i18n-wifiroam|luci-app-fwx-mesh)' .config
+          set -o pipefail
+          {
+            printf '%s\n' "$MATRIX_CONFIG"
+            echo "CONFIG_PACKAGE_wifiroam=y"
+            echo "CONFIG_PACKAGE_luci-app-wifiroam=y"
+            echo "CONFIG_PACKAGE_luci-i18n-wifiroam-zh-cn=y"
+            echo "CONFIG_PACKAGE_luci-app-fwx-mesh=y"
+          } > .config
+          cat .config | tee -a build.log
+          echo "== make defconfig ==" | tee -a build.log
+          make defconfig V=s 2>&1 | tee -a build.log
+          echo "== selected device/profile ==" | tee -a build.log
+          grep -E '^CONFIG_TARGET_.*(DEVICE_.*|Generic)=y' .config | tee -a build.log || true
+          echo "== mesh package selections ==" | tee -a build.log
+          grep -E '^CONFIG_PACKAGE_(wifiroam|luci-app-wifiroam|luci-i18n-wifiroam|luci-app-fwx-mesh)' .config | tee -a build.log || true
+          echo "== feed check ==" | tee -a build.log
+          ls -l package/feeds/meshzw/ | tee -a build.log || true
+          for p in wifiroam/Makefile luci-app-wifiroam/Makefile; do
+            if [ ! -e "package/feeds/meshzw/$p" ]; then
+              echo "::error::meshzw feed package missing: $p" | tee -a build.log
+              exit 1
+            fi
+          done
+          for c in CONFIG_PACKAGE_wifiroam CONFIG_PACKAGE_luci-app-wifiroam CONFIG_PACKAGE_luci-app-fwx-mesh; do
+            if ! grep -q "^$c=y" .config; then
+              echo "::error::$c is not selected - check package availability" | tee -a build.log
+              exit 1
+            fi
+          done
+        env:
+          MATRIX_CONFIG: ${{ matrix.config }}
 
       - name: Cache downloaded sources
         uses: actions/cache@v4
         with:
           path: dl
-          key: dl-${{ hashFiles('feeds.conf.default', 'include/target.mk') }}
+          key: dl-${{ matrix.id }}-${{ hashFiles('feeds.conf.default') }}
           restore-keys: |
+            dl-${{ matrix.id }}-
             dl-
 
       - name: Download sources
         run: |
-          set -o pipefail
+          echo "== download ==" | tee -a build.log
           make -j"$(nproc)" download 2>&1 | tee -a build.log || true
 
       - name: Build firmware
         run: |
           set -o pipefail
+          echo "== build ==" | tee -a build.log
           make -j"$(nproc)" V=s 2>&1 | tee -a build.log
 
       - name: Collect images
         if: success()
         run: |
           mkdir -p out
-          find bin/targets -maxdepth 5 -type f \
-            \( -name "*.img.gz" -o -name "*.img" -o -name "*.tar.gz" -o -name "*.iso" -o -name "profiles.json" -o -name "*.manifest" \) \
+          find bin/targets -maxdepth 6 -type f \
+            \( -name "*.img.gz" -o -name "*.img" -o -name "*.tar.gz" -o -name "*.iso" \
+               -o -name "*.itb" -o -name "*.bin" -o -name "profiles.json" -o -name "*.manifest" \) \
             -exec cp -v {} out/ \;
           ls -lh out
 
@@ -184,24 +239,28 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: fanchmwrt-x86-64-mesh
+          name: fanchmwrt-${{ matrix.id }}-mesh
           path: out/*
           if-no-files-found: error
           retention-days: 14
 
-      - name: Publish build log on failure
-        if: failure()
+      - name: Publish build log
+        if: always()
         run: |
-          set -e
+          set +e
           mkdir -p ci-log
           if [ -f build.log ]; then
-            (head -n 60 build.log; echo; echo "=== TAIL ==="; echo; tail -n 500 build.log) > ci-log/build-firmware.log
+            cp build.log "ci-log/build-${{ matrix.id }}.log"
           else
-            echo "no build log was produced" > ci-log/build-firmware.log
+            echo "no build log was produced" > "ci-log/build-${{ matrix.id }}.log"
           fi
-          { echo "### Last 500 log lines"; echo '```'; tail -n 500 build.log 2>/dev/null || true; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           git config user.name "mesh-ci-bot"
           git config user.email "mesh-ci-bot@users.noreply.github.com"
-          git add -f ci-log/build-firmware.log
-          git commit -m "ci: firmware build log (run ${GITHUB_RUN_ID})" || true
-          git push --force origin HEAD:ci-logs
+          git checkout -B "ci-logs-${{ matrix.id }}"
+          git add -f "ci-log/build-${{ matrix.id }}.log"
+          git commit -m "ci: build log ${{ matrix.id }} (run ${GITHUB_RUN_ID})" || true
+          for i in 1 2 3; do
+            git fetch origin "ci-logs-${{ matrix.id }}" >/dev/null 2>&1 && git rebase "origin/ci-logs-${{ matrix.id }}" >/dev/null 2>&1
+            git push origin "HEAD:ci-logs-${{ matrix.id }}" && break
+            sleep 2
+          done
