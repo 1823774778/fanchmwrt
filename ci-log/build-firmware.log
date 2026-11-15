@@ -1,0 +1,563 @@
+Updating feed 'packages' from 'https://git.openwrt.org/feed/packages.git^093d551675b1119a06ef224d419905e8d6b2af1a' ...
+Cloning into './feeds/packages'...
+From https://git.openwrt.org/feed/packages
+ * branch            093d551675b1119a06ef224d419905e8d6b2af1a -> FETCH_HEAD
+HEAD is now at 093d551 hev-socks5-tunnel: update to 2.19.0
+/home/runner/work/fanchmwrt/fanchmwrt
+Updating feed 'luci' from 'https://git.openwrt.org/project/luci.git^75a306df84a020c57a631ef5b4c02ace56d93387' ...
+Cloning into './feeds/luci'...
+From https://git.openwrt.org/project/luci
+ * branch              75a306df84a020c57a631ef5b4c02ace56d93387 -> FETCH_HEAD
+HEAD is now at 75a306df luci-app-adblock: fix a caching glitch
+/home/runner/work/fanchmwrt/fanchmwrt
+Updating feed 'routing' from 'https://git.openwrt.org/feed/routing.git^48c808034414a2112cf9d5261a20a320e8d0d170' ...
+Cloning into './feeds/routing'...
+From https://git.openwrt.org/feed/routing
+ * branch            48c808034414a2112cf9d5261a20a320e8d0d170 -> FETCH_HEAD
+HEAD is now at 48c8080 mesh11sd: update to version 7.3.1
+/home/runner/work/fanchmwrt/fanchmwrt
+Updating feed 'telephony' from 'https://git.openwrt.org/feed/telephony.git^2618106d5846a4a542fdf5809f0d3ed228ce439b' ...
+Cloning into './feeds/telephony'...
+From https://git.openwrt.org/feed/telephony
+ * branch            2618106d5846a4a542fdf5809f0d3ed228ce439b -> FETCH_HEAD
+HEAD is now at 2618106 asterisk: remove app-voicemail-imap module
+/home/runner/work/fanchmwrt/fanchmwrt
+Updating feed 'video' from 'https://github.com/openwrt/video.git^094bf58da6682f895255a35a84349a79dab4bf95' ...
+Cloning into './feeds/video'...
+From https://github.com/openwrt/video
+ * branch            094bf58da6682f895255a35a84349a79dab4bf95 -> FETCH_HEAD
+HEAD is now at 094bf58 mesa: bump host pip requirements tools verion for python 3.13 support
+/home/runner/work/fanchmwrt/fanchmwrt
+Updating feed 'fanchmwrt' from 'https://github.com/fanchmwrt/fanchmwrt-packages.git' ...
+Cloning into './feeds/fanchmwrt'...
+Updating feed 'meshzw' from 'https://github.com/1823774778/meshzw.git^1c19cc9c66865a4136566fcfd7105002bbc32e64' ...
+Cloning into './feeds/meshzw'...
+From https://github.com/1823774778/meshzw
+ * branch            1c19cc9c66865a4136566fcfd7105002bbc32e64 -> FETCH_HEAD
+HEAD is now at 1c19cc9 feat(wifiroam): shared device glyphs, inline card edit, appliance icons
+/home/runner/work/fanchmwrt/fanchmwrt
+Create index file './feeds/packages.index' 
+Checking 'true'... ok.
+Checking 'false'... ok.
+Checking 'working-make'... ok.
+Checking 'case-sensitive-fs'... ok.
+Checking 'proper-umask'... ok.
+Checking 'gcc'... updated.
+Checking 'working-gcc'... ok.
+Checking 'g++'... updated.
+Checking 'working-g++'... ok.
+Checking 'ncurses.h'... ok.
+Checking 'git'... updated.
+Checking 'rsync'... updated.
+Checking 'perl-data-dumper'... ok.
+Checking 'perl-findbin'... ok.
+Checking 'perl-file-copy'... ok.
+Checking 'perl-file-compare'... ok.
+Checking 'perl-thread-queue'... ok.
+Checking 'perl-ipc-cmd'... ok.
+Checking 'tar'... updated.
+Checking 'find'... updated.
+Checking 'bash'... updated.
+
+=== TAIL ===
+
+Installing package 'radius-mac' from packages
+Installing package 'radsecproxy' from packages
+Installing package 'ratched' from packages
+Installing package 'ratechecker' from packages
+Installing package 'ratelimit' from packages
+Installing package 'rclone' from packages
+Installing package 'rclone-ng' from packages
+Installing package 'rclone-webui-react' from packages
+Installing package 'readsb' from packages
+Installing package 'reaver' from packages
+Installing package 'redis' from packages
+Installing package 'redsocks' from packages
+Installing package 'relayctl' from packages
+Installing package 'remserial' from packages
+Installing package 'reptyr' from packages
+Installing package 'respondd' from packages
+Installing package 'restic' from packages
+Installing package 'restic-rest-server' from packages
+Installing package 'ripe-atlas' from packages
+Installing package 'ripgrep' from packages
+Installing package 'rng-tools' from packages
+Installing package 'rp-pppoe' from packages
+Installing package 'rpcd-mod-lxc' from packages
+Installing package 'rsyslog' from packages
+Installing package 'rtklib' from packages
+Installing package 'rtl-ais' from packages
+Installing package 'rtl_433' from packages
+Installing package 'rtorrent' from packages
+Installing package 'xmlrpc-c' from packages
+Installing package 'rtpmidid' from packages
+Installing package 'rtty' from packages
+Installing package 'ruby' from packages
+Installing package 'safe-search' from packages
+Installing package 'samplicator' from packages
+Installing package 'scapy' from packages
+Installing package 'schroot' from packages
+Installing package 'screen' from packages
+Installing package 'sedutil' from packages
+Installing package 'selinux-python' from packages
+Installing package 'setools' from packages
+Installing package 'semodule-utils' from packages
+Installing package 'ser2net' from packages
+Installing package 'serialconsole' from packages
+Installing package 'setserial' from packages
+Installing package 'sexpect' from packages
+Installing package 'shairport-sync' from packages
+Installing package 'shorewall' from packages
+Installing package 'shorewall-core' from packages
+Installing package 'shorewall-lite' from packages
+Installing package 'shorewall6' from packages
+Installing package 'shorewall6-lite' from packages
+Installing package 'siit' from packages
+Installing package 'simple-captive-portal' from packages
+Installing package 'luci-lib-ip' from luci
+Installing package 'sing-box' from packages
+Installing package 'sipcalc' from packages
+Installing package 'sispmctl' from packages
+Installing package 'slide-switch' from packages
+Installing package 'smartdns' from packages
+Installing package 'smartmontools' from packages
+Installing package 'smcroute' from packages
+Installing package 'sms-tool' from packages
+Installing package 'smstools3' from packages
+Installing package 'snapcast' from packages
+Installing package 'snowflake' from packages
+Installing package 'sockread' from packages
+Installing package 'softethervpn' from packages
+Installing package 'softethervpn5' from packages
+Installing package 'softflowd' from packages
+Installing package 'sox_ng' from packages
+Installing package 'wavpack' from packages
+Installing package 'spawn-fcgi' from packages
+Installing package 'speedtest-go' from packages
+Installing package 'speedtest-netperf' from packages
+Installing package 'speedtestcpp' from packages
+Installing package 'speexdsp' from packages
+Installing package 'spi-tools' from packages
+Installing package 'spoofer' from packages
+Installing package 'sqm-scripts' from packages
+Installing package 'squashfs-tools' from packages
+Installing package 'squeezelite' from packages
+Installing package 'squid' from packages
+Installing package 'sscep' from packages
+Installing package 'ssdeep' from packages
+Installing package 'sshfs' from packages
+Installing package 'sshpass' from packages
+Installing package 'sshtunnel' from packages
+Installing package 'sslh' from packages
+Installing package 'sstp-client' from packages
+Installing package 'static-neighbor-reports' from packages
+Installing package 'stlink' from packages
+Installing package 'stm32flash' from packages
+Installing package 'stress-ng' from packages
+Installing package 'strongswan' from packages
+Installing package 'stubby' from packages
+Installing package 'stunnel' from packages
+Installing package 'subversion' from packages
+Installing package 'sumo' from packages
+Installing package 'sunwait' from packages
+Installing package 'swanmon' from packages
+Installing package 'swgp-go' from packages
+Installing package 'switchdev-poller' from packages
+Installing package 'syncthing' from packages
+Installing package 'syslog-ng' from packages
+Installing package 'sysstat' from packages
+Installing package 'tac_plus' from packages
+Installing package 'tailscale' from packages
+Installing package 'tang' from packages
+Installing package 'taskwarrior' from packages
+Installing package 'tayga' from packages
+Installing package 'tcp-in-udp' from packages
+Installing package 'tcpproxy' from packages
+Installing package 'tcpreplay' from packages
+Installing package 'tcsh' from packages
+Installing package 'telegraf' from packages
+Installing package 'telldus-core' from packages
+Installing package 'telldus-mqtt' from packages
+Installing package 'telnet-bsd' from packages
+Installing package 'tessdata' from packages
+Installing package 'tesseract' from packages
+Installing package 'tgt' from packages
+Installing package 'tinyionice' from packages
+Installing package 'tinyproxy' from packages
+Installing package 'tio' from packages
+Installing package 'tmate' from packages
+Installing package 'tmate-ssh-server' from packages
+Installing package 'tmux' from packages
+Installing package 'tor-hs' from packages
+Installing package 'torsocks' from packages
+Installing package 'tracertools' from packages
+Installing package 'trafficshaper' from packages
+Installing package 'transmission' from packages
+Installing package 'travelmate' from packages
+Installing package 'tree' from packages
+Installing package 'ttyd' from packages
+Installing package 'ttymidi-sysex' from packages
+Installing package 'tunneldigger' from packages
+Installing package 'tunneldigger-broker' from packages
+Installing package 'tvheadend' from packages
+Installing package 'u2pnpd' from packages
+Installing package 'uacme' from packages
+Installing package 'uanytun' from packages
+Installing package 'uci2' from packages
+Installing package 'udhcpsnoop' from packages
+Installing package 'udns' from packages
+Installing package 'udphp-client' from packages
+Installing package 'udpspeeder' from packages
+Installing package 'udptunnel' from packages
+Installing package 'udpxy' from packages
+Installing package 'ufp' from packages
+Installing package 'uhubctl' from packages
+Installing package 'ulogd' from packages
+Installing package 'umurmur' from packages
+Installing package 'uneighbord' from packages
+Installing package 'unifdef' from packages
+Installing package 'unrar' from packages
+Installing package 'upmpdcli' from packages
+Installing package 'uradvd' from packages
+Installing package 'usbip' from packages
+Installing package 'uspot' from packages
+Installing package 'usteer' from packages
+Installing package 'ustreamer' from packages
+Installing package 'uuid' from packages
+Installing package 'uvcdynctrl' from packages
+Installing package 'uvol' from packages
+Installing package 'v2ray-core' from packages
+Installing package 'v2ray-geodata' from packages
+Installing package 'v2raya' from packages
+Installing package 'v4l2camera' from packages
+Installing package 'v4l2loopback' from packages
+Installing package 'v4l2rtspserver' from packages
+Installing package 'v4l2tools' from packages
+Installing package 'vallumd' from packages
+Installing package 'vnstat' from packages
+Installing package 'vnstat2' from packages
+Installing package 'vpnc' from packages
+Installing package 'vsftpd' from packages
+Installing package 'wakeonlan' from packages
+Installing package 'watchcat' from packages
+Installing package 'wavemon' from packages
+Installing package 'websocketpp' from packages
+Installing package 'weechat' from packages
+Installing package 'wfb-ng' from packages
+Installing package 'wg-installer' from packages
+Installing package 'wgsd' from packages
+Installing package 'which' from packages
+Installing package 'whois' from packages
+Installing package 'wifi-presence' from packages
+Installing package 'wifidog' from packages
+Installing package 'wifischedule' from packages
+Installing package 'wifitoggle' from packages
+Installing package 'wipe' from packages
+Installing package 'wsdd2' from packages
+Installing package 'xdg-dbus-proxy' from packages
+Installing package 'xfrpc' from packages
+Installing package 'xfsprogs' from packages
+Installing package 'xl2tpd' from packages
+Installing package 'xtables-addons' from packages
+Installing package 'xupnpd' from packages
+Installing package 'yara' from packages
+Installing package 'yggdrasil' from packages
+Installing package 'yggdrasil-jumper' from packages
+Installing package 'yq' from packages
+Installing package 'yt-dlp' from packages
+Installing package 'zabbix' from packages
+Installing package 'zerotier' from packages
+Installing package 'zile' from packages
+Installing package 'zlog' from packages
+Installing package 'znc' from packages
+Installing package 'zsh' from packages
+Installing package 'ztdns' from packages
+Installing package 'zyxel-reset' from packages
+Installing package 'luci' from luci
+Installing all packages from feed luci.
+Installing package 'luci-light' from luci
+Installing package 'luci-proto-ipv6' from luci
+Installing package 'luci-app-firewall' from luci
+Installing package 'luci-mod-admin-full' from luci
+Installing package 'luci-mod-status' from luci
+Installing package 'luci-mod-system' from luci
+Installing package 'luci-mod-network' from luci
+Installing package 'luci-lib-uqr' from luci
+Installing package 'luci-proto-ppp' from luci
+Installing package 'luci-theme-bootstrap' from luci
+Installing package 'rpcd-mod-rrdns' from luci
+Installing package 'luci-app-package-manager' from luci
+Installing package 'luci-app-acl' from luci
+Installing package 'luci-app-acme' from luci
+Installing package 'luci-app-adblock' from luci
+Installing package 'luci-app-adblock-fast' from luci
+Installing package 'luci-app-adguardhome' from luci
+Installing package 'luci-app-advanced-reboot' from luci
+Installing package 'luci-app-antiblock' from luci
+Installing package 'luci-app-apinger' from luci
+Installing package 'luci-app-aria2' from luci
+Installing package 'luci-app-attendedsysupgrade' from luci
+Installing package 'luci-app-babeld' from luci
+Installing package 'babeld' from routing
+Installing package 'luci-app-banip' from luci
+Installing package 'luci-app-bcp38' from luci
+Installing package 'luci-app-bmx7' from luci
+Installing package 'luci-app-chrony' from luci
+Installing package 'luci-app-clamav' from luci
+Installing package 'luci-app-cloudflared' from luci
+Installing package 'luci-app-commands' from luci
+Installing package 'luci-app-coovachilli' from luci
+Installing package 'luci-app-crowdsec-firewall-bouncer' from luci
+Installing package 'luci-app-csshnpd' from luci
+Installing package 'luci-app-dawn' from luci
+Installing package 'luci-app-dcwapd' from luci
+Installing package 'luci-app-ddns' from luci
+Installing package 'luci-app-dockerman' from luci
+Installing package 'luci-app-dump1090' from luci
+Installing package 'luci-app-email' from luci
+Installing package 'luci-app-eoip' from luci
+Installing package 'luci-app-example' from luci
+Installing package 'luci-app-filebrowser' from luci
+Installing package 'luci-app-filemanager' from luci
+Installing package 'luci-app-frpc' from luci
+Installing package 'luci-app-frps' from luci
+Installing package 'luci-app-fwknopd' from luci
+Installing package 'luci-app-hd-idle' from luci
+Installing package 'luci-app-https-dns-proxy' from luci
+Installing package 'luci-app-irqbalance' from luci
+Installing package 'luci-app-keepalived' from luci
+Installing package 'luci-app-ksmbd' from luci
+Installing package 'luci-app-ledtrig-rssi' from luci
+Installing package 'luci-app-ledtrig-switch' from luci
+Installing package 'luci-app-ledtrig-usbport' from luci
+Installing package 'luci-app-librespeed' from luci
+Installing package 'luci-app-libreswan' from luci
+Installing package 'luci-app-lldpd' from luci
+Installing package 'luci-app-lorawan-basicstation' from luci
+Installing package 'luci-app-lxc' from luci
+Installing package 'luci-app-minidlna' from luci
+Installing package 'luci-app-mosquitto' from luci
+Installing package 'luci-app-mwan3' from luci
+Installing package 'luci-app-natmap' from luci
+Installing package 'luci-app-nextdns' from luci
+Installing package 'luci-app-nlbwmon' from luci
+Installing package 'luci-lib-chartjs' from luci
+Installing package 'luci-app-nut' from luci
+Installing package 'luci-app-ocserv' from luci
+Installing package 'luci-app-olsr' from luci
+Installing package 'olsrd' from routing
+Installing package 'luci-app-olsr-services' from luci
+Installing package 'luci-app-olsr-viz' from luci
+Installing package 'luci-app-omcproxy' from luci
+Installing package 'luci-app-openlist' from luci
+Installing package 'luci-app-openvpn' from luci
+Installing package 'luci-compat' from luci
+Installing package 'luci-lua-runtime' from luci
+Installing package 'luci-lib-base' from luci
+Installing package 'luci-lib-jsonc' from luci
+Installing package 'ucode-mod-lua' from luci
+Installing package 'luci-app-openwisp' from luci
+Installing package 'luci-app-p910nd' from luci
+Installing package 'luci-app-pagekitec' from luci
+Installing package 'luci-app-pbr' from luci
+Installing package 'luci-app-privoxy' from luci
+Installing package 'luci-app-qos' from luci
+Installing package 'luci-app-radicale3' from luci
+Installing package 'rpcd-mod-rad3-enc' from luci
+Installing package 'luci-app-rp-pppoe-server' from luci
+Installing package 'luci-app-rustdesk-server' from luci
+Installing package 'luci-app-samba4' from luci
+Installing package 'luci-app-ser2net' from luci
+Installing package 'luci-app-smartdns' from luci
+Installing package 'luci-app-snmpd' from luci
+Installing package 'luci-app-softether' from luci
+Installing package 'luci-app-sqm' from luci
+Installing package 'luci-app-squid' from luci
+Installing package 'luci-app-sshtunnel' from luci
+Installing package 'luci-app-statistics' from luci
+Installing package 'luci-app-strongswan-swanctl' from luci
+Installing package 'luci-app-tailscale-community' from luci
+Installing package 'luci-app-tinyproxy' from luci
+Installing package 'luci-app-tor' from luci
+Installing package 'luci-app-transmission' from luci
+Installing package 'luci-app-travelmate' from luci
+Installing package 'luci-app-ttyd' from luci
+Installing package 'luci-app-udpxy' from luci
+Installing package 'luci-app-uhttpd' from luci
+Installing package 'luci-app-unbound' from luci
+Installing package 'luci-app-upnp' from luci
+Installing package 'luci-app-usteer' from luci
+Installing package 'luci-app-ustreamer' from luci
+Installing package 'luci-app-v2raya' from luci
+Installing package 'luci-app-vnstat2' from luci
+Installing package 'luci-app-watchcat' from luci
+Installing package 'luci-app-weechat' from luci
+Installing package 'luci-app-wifihistory' from luci
+Installing package 'luci-app-wifischedule' from luci
+Installing package 'luci-app-wol' from luci
+Installing package 'luci-app-xfrpc' from luci
+Installing package 'luci-app-xinetd' from luci
+Installing package 'luci-layer2' from luci
+Installing package 'luci-lib-httpclient' from luci
+Installing package 'luci-lib-httpprotoutils' from luci
+Installing package 'luci-lib-ipkg' from luci
+Installing package 'luci-lib-iptparser' from luci
+Installing package 'luci-lib-json' from luci
+Installing package 'luci-lib-px5g' from luci
+Installing package 'luci-mod-battstatus' from luci
+Installing package 'luci-mod-dashboard' from luci
+Installing package 'luci-mod-dsl' from luci
+Installing package 'luci-mod-rpc' from luci
+Installing package 'luci-nginx' from luci
+Installing package 'luci-proto-3g' from luci
+Installing package 'luci-proto-autoip' from luci
+Installing package 'luci-proto-batman-adv' from luci
+Installing package 'batman-adv' from routing
+Installing package 'batctl' from routing
+Installing package 'luci-proto-external' from luci
+Installing package 'luci-proto-gre' from luci
+Installing package 'luci-proto-hnet' from luci
+Installing package 'luci-proto-ipip' from luci
+Installing package 'luci-proto-mbim' from luci
+Installing package 'luci-proto-modemmanager' from luci
+Installing package 'luci-proto-ncm' from luci
+Installing package 'luci-proto-nebula' from luci
+Installing package 'luci-proto-openconnect' from luci
+Installing package 'luci-proto-openfortivpn' from luci
+Installing package 'luci-proto-pppossh' from luci
+Installing package 'luci-proto-qmi' from luci
+Installing package 'luci-proto-relay' from luci
+Installing package 'luci-proto-sstp' from luci
+Installing package 'luci-proto-unet' from luci
+Installing package 'luci-proto-vpnc' from luci
+Installing package 'luci-proto-vti' from luci
+Installing package 'luci-proto-vxlan' from luci
+Installing package 'luci-proto-wireguard' from luci
+Installing package 'luci-proto-xfrm' from luci
+Installing package 'luci-proto-yggdrasil' from luci
+Installing package 'luci-ssl' from luci
+Installing package 'luci-ssl-openssl' from luci
+Installing package 'luci-theme-footstrap' from luci
+Installing package 'luci-theme-material' from luci
+Installing package 'luci-theme-openwrt' from luci
+Installing package 'luci-theme-openwrt-2020' from luci
+Installing package 'ahcpd' from routing
+Installing all packages from feed routing.
+Installing package 'alfred' from routing
+Installing package 'babel-pinger' from routing
+Installing package 'batmand' from routing
+Installing package 'bird2' from routing
+Installing package 'bird3' from routing
+Installing package 'cjdns' from routing
+Installing package 'luci-app-cjdns' from routing
+Installing package 'mesh11sd' from routing
+Installing package 'naywatch' from routing
+Installing package 'ndppd' from routing
+Installing package 'nodogsplash' from routing
+Installing package 'ohybridproxy' from routing
+Installing package 'opennds' from routing
+Installing package 'pimbd' from routing
+Installing package 'prince' from routing
+Installing package 'vis' from routing
+Installing package 'asterisk' from telephony
+Installing all packages from feed telephony.
+Installing package 'dahdi-tools' from telephony
+Installing package 'dahdi-linux' from telephony
+Installing package 'libpri' from telephony
+Installing package 'pjproject' from telephony
+Installing package 'iksemel' from telephony
+Installing package 'spandsp' from telephony
+Installing package 'libsrtp' from telephony
+Installing package 'asterisk-chan-dongle' from telephony
+Installing package 'asterisk-chan-lantiq' from telephony
+Installing package 'asterisk-chan-sccp' from telephony
+Installing package 'asterisk-g72x' from telephony
+Installing package 'bcg729' from telephony
+Installing package 'asterisk-opus' from telephony
+Installing package 'baresip' from telephony
+Installing package 're' from telephony
+Installing package 'baresip-apps' from telephony
+Installing package 'coturn' from telephony
+Installing package 'freeswitch' from telephony
+Installing package 'spandsp3' from telephony
+Installing package 'sofia-sip' from telephony
+Installing package 'gsmlib' from telephony
+Installing package 'libctb' from telephony
+Installing package 'signalwire-client-c' from telephony
+Installing package 'libks' from telephony
+Installing package 'freeswitch-mod-bcg729' from telephony
+Installing package 'freetdm' from telephony
+Installing package 'kamailio' from telephony
+Installing package 'libosip2' from telephony
+Installing package 'miax' from telephony
+Installing package 'pcapsipdump' from telephony
+Installing package 'rtpengine' from telephony
+Installing package 'rtpproxy' from telephony
+Installing package 'sipgrep' from telephony
+Installing package 'sipp' from telephony
+Installing package 'siproxd' from telephony
+Installing package 'sngrep' from telephony
+Installing package 'yate' from telephony
+Installing package 'assimp' from video
+Installing all packages from feed video.
+Installing package 'cage' from video
+Installing package 'wlroots' from video
+Installing package 'libdisplay-info' from video
+Installing package 'seatd' from video
+Installing package 'libxkbcommon' from video
+Installing package 'xkeyboard-config' from video
+Installing package 'cairo' from video
+Installing package 'cog' from video
+Installing package 'wpewebkit' from video
+Installing package 'harfbuzz' from video
+Installing package 'libepoxy' from video
+Installing package 'libwpe' from video
+Installing package 'wpebackend-fdo' from video
+Installing package 'fribidi' from video
+Installing package 'gdk-pixbuf' from video
+Installing package 'glm' from video
+Installing package 'gtk' from video
+Installing package 'pango' from video
+Installing package 'gzdoom' from video
+Installing package 'vulkan-loader' from video
+Installing package 'zmusic' from video
+Installing package 'sdl2' from video
+Installing package 'kmscube' from video
+Installing package 'libdouble-conversion' from video
+Installing package 'qt5base' from video
+Installing package 'qt5graphicaleffects' from video
+Installing package 'qt5quick' from video
+Installing package 'qt5quick-controls' from video
+Installing package 'qt5script' from video
+Installing package 'qt5svg' from video
+Installing package 'qt5tools' from video
+Installing package 'qt5translations' from video
+Installing package 'qt5virtualkeyboard' from video
+Installing package 'sdl2-doom' from video
+Installing package 'sdl2-mixer' from video
+Installing package 'vkmark' from video
+Installing package 'wayland-utils' from video
+Installing package 'weston' from video
+Installing package 'luci-app-fwx-app-center' from fanchmwrt
+Installing all packages from feed fanchmwrt.
+Installing package 'luci-app-fwx-resources' from fanchmwrt
+Installing package 'luci-app-fwx-appfilter' from fanchmwrt
+Installing package 'luci-app-fwx-dashboard' from fanchmwrt
+Installing package 'luci-app-fwx-dashboard-setting' from fanchmwrt
+Installing package 'luci-app-fwx-fastnat' from fanchmwrt
+Installing package 'luci-app-fwx-feature' from fanchmwrt
+Installing package 'luci-app-fwx-firewall' from fanchmwrt
+Installing package 'luci-app-fwx-mac-blacklist' from fanchmwrt
+Installing package 'luci-app-fwx-user' from fanchmwrt
+Installing package 'luci-app-fwx-macfilter' from fanchmwrt
+Installing package 'luci-app-fwx-network' from fanchmwrt
+Installing package 'luci-app-fwx-record' from fanchmwrt
+Installing package 'luci-app-fwx-record-whitelist' from fanchmwrt
+Installing package 'luci-app-fwx-session-stat' from fanchmwrt
+Installing package 'luci-app-fwx-system' from fanchmwrt
+Installing package 'luci-app-fwx-traffic-stat' from fanchmwrt
+Installing package 'luci-app-fwx-user-record' from fanchmwrt
+Installing package 'luci-app-fwx-wireless' from fanchmwrt
+Installing package 'luci-app-wifiroam' from meshzw
+Installing all packages from feed meshzw.
+Installing package 'wifiroam' from meshzw
