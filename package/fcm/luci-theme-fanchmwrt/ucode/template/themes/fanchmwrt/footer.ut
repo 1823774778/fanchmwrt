@@ -19,6 +19,7 @@
 			<ul class="breadcrumb pull-right" id="modemenu" style="display:none"></ul>
 		</footer>
 		<script>L.require('menu-fanchmwrt')</script>
+		<script>L.require('menu-fanchmwrt-mesh')</script>
 		{% endif %}
 	</body>
 </html>

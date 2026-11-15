@@ -34,6 +34,7 @@
 		{% endif %}
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="{{ media }}/cascade.css">
+		<link rel="stylesheet" href="{{ media }}/mesh.css">
 		<link rel="stylesheet" media="screen and (max-width: 768px)" href="{{ media }}/mobile.css" />
 		<link rel="icon" href="{{ media }}/logo_48.png" sizes="48x48">
 		<link rel="icon" href="{{ media }}/logo.svg" sizes="any">
@@ -56,7 +57,7 @@
 
 		<div class="main-layout">
 			<nav class="sidebar-nav" id="theme-sidebar" aria-label="{{ _('Main menu') }}">
-				<a class="sidebar_brand" href="{{ dispatcher.build_url('admin/fwx_dashboard') }}">{{ striptags(boardinfo.hostname ?? 'FanchmWrt') }}</a>
+				<a class="sidebar_brand" href="{{ dispatcher.build_url('admin/mesh/management/home') }}">{{ striptags(boardinfo.hostname ?? 'FanchmWrt') }}</a>
 				<ul class="nav" id="topmenu" style="display:none"></ul>
 			</nav>
 			
@@ -90,3 +91,4 @@
 
 			<div id="tabmenu" style="display:none"></div>
 		{% endif %}
+
