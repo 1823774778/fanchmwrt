@@ -1,0 +1,121 @@
+/*
+ * FanchmWrt theme — Mesh 组网总览卡片样式
+ * 用于仪表盘首页置顶的组网信息卡片（由 menu-fanchmwrt-mesh.js 注入）
+ */
+
+.mesh-ov-card {
+	margin: 0 0 12px;
+	padding: 14px 16px;
+	border-radius: 10px;
+	border: 1px solid rgba(121, 141, 164, 0.36);
+	background: linear-gradient(135deg, rgba(78, 166, 246, 0.10) 0%, rgba(34, 196, 223, 0.04) 100%);
+	box-shadow: 0 2px 10px rgba(31, 45, 61, 0.06);
+}
+
+[data-darkmode="true"] .mesh-ov-card {
+	border-color: rgba(255, 255, 255, 0.20);
+	background: linear-gradient(135deg, rgba(78, 166, 246, 0.16) 0%, rgba(34, 196, 223, 0.06) 100%);
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+}
+
+.mesh-ov-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.mesh-ov-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.mesh-ov-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #9aa4b2;
+}
+
+.mesh-ov-dot.ok {
+	background: #22c55e;
+	box-shadow: 0 0 8px rgba(34, 197, 94, 0.55);
+}
+
+.mesh-ov-dot.off {
+	background: #9aa4b2;
+}
+
+.mesh-ov-link {
+	font-size: 13px;
+	color: #2f7fd1;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+[data-darkmode="true"] .mesh-ov-link {
+	color: #79b8ff;
+}
+
+.mesh-ov-link:hover {
+	text-decoration: underline;
+}
+
+.mesh-ov-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 32px;
+}
+
+.mesh-ov-item {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	min-width: 120px;
+}
+
+.mesh-ov-k {
+	font-size: 12px;
+	opacity: 0.65;
+}
+
+.mesh-ov-v {
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.mesh-ov-aps {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 1px dashed rgba(121, 141, 164, 0.34);
+}
+
+.mesh-ov-ap {
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 12px;
+	background: rgba(78, 166, 246, 0.14);
+	color: #2f7fd1;
+}
+
+[data-darkmode="true"] .mesh-ov-ap {
+	background: rgba(121, 184, 255, 0.16);
+	color: #9ecaff;
+}
+
+.mesh-ov-ap.off {
+	opacity: 0.45;
+}
+
+.mesh-ov-empty {
+	font-size: 13px;
+	opacity: 0.7;
+	padding: 4px 0;
+}
