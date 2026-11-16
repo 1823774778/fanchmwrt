@@ -1,0 +1,55 @@
+#!/bin/sh
+# First-boot network config for JDCloud RE-SS-01 / RE-CS-02
+
+board=$(board_name)
+
+case "$board" in
+jdcloud,re-ss-01)
+	lan_ports="lan1 lan2 lan3"
+	;;
+jdcloud,re-cs-02)
+	lan_ports="lan1 lan2 lan3 lan4"
+	;;
+*)
+	exit 0
+	;;
+esac
+
+cat > /etc/config/network <<'EOF'
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'auto'
+
+config device 'lan_dev'
+	option name 'br-lan'
+	option type 'bridge'
+EOF
+
+for p in $lan_ports; do
+	echo "	list ports '$p'" >> /etc/config/network
+done
+
+cat >> /etc/config/network <<'EOF'
+
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+
+config interface 'wan'
+	option device 'wan'
+	option proto 'dhcp'
+
+config interface 'wan6'
+	option device 'wan'
+	option proto 'dhcpv6'
+EOF
+
+exit 0
