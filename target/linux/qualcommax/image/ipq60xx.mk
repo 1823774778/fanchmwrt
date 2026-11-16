@@ -226,6 +226,7 @@ define Device/jdcloud_re-ss-01
 	KERNEL_SIZE := 6144k
 	DEVICE_PACKAGES := ath11k-firmware-ipq6018
 	SUPPORTED_DEVICES += jdcloud,re-ss-01
+	IMAGE/factory.bin := append-kernel | pad-to 6144k | append-rootfs | append-metadata
 endef
 TARGET_DEVICES += jdcloud_re-ss-01
 
@@ -240,6 +241,7 @@ define Device/jdcloud_re-cs-02
 	KERNEL_SIZE := 6144k
 	DEVICE_PACKAGES := ath11k-firmware-ipq6018 ath11k-firmware-qcn9074 kmod-ath11k-pci
 	SUPPORTED_DEVICES += jdcloud,re-cs-02
+	IMAGE/factory.bin := append-kernel | pad-to 6144k | append-rootfs | append-metadata
 endef
 TARGET_DEVICES += jdcloud_re-cs-02
 
