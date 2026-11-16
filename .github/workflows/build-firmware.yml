@@ -13,6 +13,7 @@ on:
       - "include/default-packages.mk"
       - "package/fcm/**"
       - "feeds_patches/**"
+      - "target/linux/qualcommax/**"
       - ".github/workflows/build-firmware.yml"
 
 permissions:
@@ -81,6 +82,9 @@ jobs:
             echo "CONFIG_PACKAGE_luci-app-wifiroam=y"
             echo "CONFIG_PACKAGE_luci-i18n-wifiroam-zh-cn=y"
             echo "CONFIG_PACKAGE_luci-app-fwx-mesh=y"
+            case "$MATRIX_CONFIG" in
+              *qualcommax*) echo "CONFIG_PACKAGE_fwx-jdcloud=y" ;;
+            esac
           } > .config
           echo "== .config seed ==" | tee -a build.log
           cat .config | tee -a build.log
