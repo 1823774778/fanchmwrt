@@ -32,21 +32,16 @@ jobs:
       max-parallel: 3
       matrix:
         include:
-          - id: jdcloud-re-cp-03
+          - id: jdcloud-re-ss-01
             config: |
-              CONFIG_TARGET_mediatek=y
-              CONFIG_TARGET_mediatek_filogic=y
-              CONFIG_TARGET_mediatek_filogic_DEVICE_jdcloud_re-cp-03=y
-          - id: jdcloud-re-cp-02
+              CONFIG_TARGET_qualcommax=y
+              CONFIG_TARGET_qualcommax_ipq60xx=y
+              CONFIG_TARGET_qualcommax_ipq60xx_DEVICE_jdcloud_re-ss-01=y
+          - id: jdcloud-re-cs-02
             config: |
-              CONFIG_TARGET_ramips=y
-              CONFIG_TARGET_ramips_mt7621=y
-              CONFIG_TARGET_ramips_mt7621_DEVICE_jdcloud_re-cp-02=y
-          - id: jdcloud-re-sp-01b
-            config: |
-              CONFIG_TARGET_ramips=y
-              CONFIG_TARGET_ramips_mt7621=y
-              CONFIG_TARGET_ramips_mt7621_DEVICE_jdcloud_re-sp-01b=y
+              CONFIG_TARGET_qualcommax=y
+              CONFIG_TARGET_qualcommax_ipq60xx=y
+              CONFIG_TARGET_qualcommax_ipq60xx_DEVICE_jdcloud_re-cs-02=y
 
     steps:
       - name: Free disk space
@@ -119,7 +114,6 @@ jobs:
 
       - name: Build firmware
         run: |
-          set -o pipefail
           echo "== build ==" | tee -a build.log
           make -j"$(nproc)" V=s 2>&1 | tee -a build.log
 
