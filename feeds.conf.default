@@ -5,3 +5,4 @@ src-git telephony https://git.openwrt.org/feed/telephony.git^2618106d5846a4a542f
 src-git video https://github.com/openwrt/video.git^094bf58da6682f895255a35a84349a79dab4bf95
 src-git fanchmwrt https://github.com/fanchmwrt/fanchmwrt-packages.git
 src-git meshzw https://github.com/1823774778/meshzw.git^1c19cc9c66865a4136566fcfd7105002bbc32e64
+# mesh integration: wifiroam (802.11k/v/r) is pulled from meshzw and pre-installed via include/default-packages.mk
