@@ -17,131 +17,33 @@ permissions:
 
 concurrency:
   group: fw-${{ github.ref }}
-  cancel-in-progress: false
-
-env:
-  SDK_IMAGE: ghcr.io/openwrt/sdk:qualcommax-ipq807x-25.12.6
+  cancel-in-progress: true
 
 jobs:
-  packages:
-    name: Package gate (wifiroam)
-    runs-on: ubuntu-latest
-    timeout-minutes: 90
-
-    steps:
-      - name: Checkout firmware repo
-        uses: actions/checkout@v4
-
-      - name: Checkout meshzw feed
-        uses: actions/checkout@v4
-        with:
-          repository: 1823774778/meshzw
-          ref: 1c19cc9c66865a4136566fcfd7105002bbc32e64
-          path: meshzw
-
-      - name: Build mesh packages in OpenWrt SDK
-        run: |
-          mkdir -p artifacts
-          chmod 0777 artifacts
-          docker run --rm \
-            --volume "$PWD/meshzw:/feed:ro" \
-            --volume "$PWD/artifacts:/artifacts" \
-            --env GIT_CONFIG_COUNT=1 \
-            --env GIT_CONFIG_KEY_0=safe.directory \
-            --env GIT_CONFIG_VALUE_0='*' \
-            "$SDK_IMAGE" \
-            bash -lc '
-              set -euo pipefail
-
-              if [ ! -d ./scripts ]; then
-                bash setup.sh
-              fi
-
-              sed -i \
-                -e "s#https://git.openwrt.org/feed/#https://github.com/openwrt/#" \
-                -e "s#https://git.openwrt.org/openwrt/#https://github.com/openwrt/#" \
-                -e "s#https://git.openwrt.org/project/#https://github.com/openwrt/#" \
-                feeds.conf.default
-
-              echo "src-link meshzw /feed" >> feeds.conf.default
-
-              ./scripts/feeds update -a
-              ./scripts/feeds install -a
-              make defconfig
-
-              make package/wifiroam/compile V=s -j"$(nproc)" 2>&1 | tee /artifacts/pkg-gate.log
-              make package/luci-app-wifiroam/compile V=s -j"$(nproc)" 2>&1 | tee -a /artifacts/pkg-gate.log
-
-              find bin/packages -type f -name "*.apk" \
-                \( -name "wifiroam-*" -o -name "luci-app-wifiroam-*" \) \
-                -exec cp -v {} /artifacts/ \;
-              ls -lh /artifacts
-            '
-
-      - name: Upload gate artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mesh-packages
-          path: artifacts/*.apk
-          if-no-files-found: warn
-
-      - name: Publish gate log
-        if: always()
-        run: |
-          set +e
-          mkdir -p ci-log
-          if [ -f artifacts/pkg-gate.log ]; then
-            cp artifacts/pkg-gate.log ci-log/package-gate.log
-          else
-            echo "package gate produced no log" > ci-log/package-gate.log
-          fi
-          git config user.name "mesh-ci-bot"
-          git config user.email "mesh-ci-bot@users.noreply.github.com"
-          git checkout -B ci-logs-pkg
-          git add -f ci-log/package-gate.log
-          git commit -m "ci: package gate log (run ${GITHUB_RUN_ID})" || true
-          for i in 1 2 3; do
-            git fetch origin ci-logs-pkg >/dev/null 2>&1 && git rebase origin/ci-logs-pkg >/dev/null 2>&1
-            git push origin HEAD:ci-logs-pkg && break
-            sleep 2
-          done
-
   firmware:
     name: Firmware ${{ matrix.id }}
-    needs: packages
     runs-on: ubuntu-latest
     timeout-minutes: 350
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 3
       matrix:
         include:
-          - id: x86-64
-            desc: x86/64 (Generic)
-            config: |
-              CONFIG_TARGET_x86=y
-              CONFIG_TARGET_x86_64=y
-              CONFIG_TARGET_x86_64_Generic=y
-              CONFIG_TARGET_ROOTFS_PARTSIZE=1024
-          - id: ipq807x
-            desc: Qualcomm IPQ807x (Redmi AX6)
-            config: |
-              CONFIG_TARGET_qualcommax=y
-              CONFIG_TARGET_qualcommax_ipq807x=y
-              CONFIG_TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6=y
-          - id: filogic
-            desc: MediaTek Filogic (Xiaomi AX3000T)
+          - id: jdcloud-re-cp-03
             config: |
               CONFIG_TARGET_mediatek=y
               CONFIG_TARGET_mediatek_filogic=y
-              CONFIG_TARGET_mediatek_filogic_DEVICE_xiaomi_mi-router-ax3000t=y
-          - id: armsr-armv8
-            desc: ARM SystemReady (ARMv8 generic)
+              CONFIG_TARGET_mediatek_filogic_DEVICE_jdcloud_re-cp-03=y
+          - id: jdcloud-re-cp-02
             config: |
-              CONFIG_TARGET_armsr=y
-              CONFIG_TARGET_armsr_armv8=y
-              CONFIG_TARGET_armsr_armv8_DEVICE_generic=y
+              CONFIG_TARGET_ramips=y
+              CONFIG_TARGET_ramips_mt7621=y
+              CONFIG_TARGET_ramips_mt7621_DEVICE_jdcloud_re-cp-02=y
+          - id: jdcloud-re-sp-01b
+            config: |
+              CONFIG_TARGET_ramips=y
+              CONFIG_TARGET_ramips_mt7621=y
+              CONFIG_TARGET_ramips_mt7621_DEVICE_jdcloud_re-sp-01b=y
 
     steps:
       - name: Free disk space
@@ -150,7 +52,6 @@ jobs:
             /opt/hostedtoolcache/CodeQL /usr/local/share/boost \
             /usr/local/lib/node_modules || true
           sudo apt-get clean
-          sudo docker image prune -af || true
           df -h /
 
       - name: Checkout
@@ -158,11 +59,11 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          sudo apt-get update -qq
+          sudo apt-get update -qq 2>&1 | tee -a build.log
           sudo apt-get install -y --no-install-recommends \
             build-essential clang flex bison g++ gawk gcc-multilib g++-multilib \
             gettext git libncurses-dev libssl-dev python3-setuptools rsync swig \
-            unzip zlib1g-dev file wget ccache
+            unzip zlib1g-dev file wget ccache 2>&1 | tee -a build.log
 
       - name: Feeds update and install
         run: |
@@ -172,6 +73,8 @@ jobs:
           ./scripts/feeds install -a 2>&1 | tee -a build.log
 
       - name: Configure target
+        env:
+          MATRIX_CONFIG: ${{ matrix.config }}
         run: |
           set -o pipefail
           {
@@ -181,29 +84,22 @@ jobs:
             echo "CONFIG_PACKAGE_luci-i18n-wifiroam-zh-cn=y"
             echo "CONFIG_PACKAGE_luci-app-fwx-mesh=y"
           } > .config
+          echo "== .config seed ==" | tee -a build.log
           cat .config | tee -a build.log
           echo "== make defconfig ==" | tee -a build.log
           make defconfig V=s 2>&1 | tee -a build.log
-          echo "== selected device/profile ==" | tee -a build.log
-          grep -E '^CONFIG_TARGET_.*(DEVICE_.*|Generic)=y' .config | tee -a build.log || true
-          echo "== mesh package selections ==" | tee -a build.log
+          echo "== selected profile ==" | tee -a build.log
+          grep -E '^CONFIG_TARGET_.*DEVICE_' .config | tee -a build.log || true
+          echo "== mesh packages ==" | tee -a build.log
           grep -E '^CONFIG_PACKAGE_(wifiroam|luci-app-wifiroam|luci-i18n-wifiroam|luci-app-fwx-mesh)' .config | tee -a build.log || true
-          echo "== feed check ==" | tee -a build.log
-          ls -l package/feeds/meshzw/ | tee -a build.log || true
-          for p in wifiroam/Makefile luci-app-wifiroam/Makefile; do
-            if [ ! -e "package/feeds/meshzw/$p" ]; then
-              echo "::error::meshzw feed package missing: $p" | tee -a build.log
-              exit 1
-            fi
-          done
+          echo "== feed dir ==" | tee -a build.log
+          ls -l package/feeds/meshzw/ 2>&1 | tee -a build.log || true
           for c in CONFIG_PACKAGE_wifiroam CONFIG_PACKAGE_luci-app-wifiroam CONFIG_PACKAGE_luci-app-fwx-mesh; do
             if ! grep -q "^$c=y" .config; then
-              echo "::error::$c is not selected - check package availability" | tee -a build.log
+              echo "::error::$c not selected" | tee -a build.log
               exit 1
             fi
           done
-        env:
-          MATRIX_CONFIG: ${{ matrix.config }}
 
       - name: Cache downloaded sources
         uses: actions/cache@v4
@@ -212,7 +108,6 @@ jobs:
           key: dl-${{ matrix.id }}-${{ hashFiles('feeds.conf.default') }}
           restore-keys: |
             dl-${{ matrix.id }}-
-            dl-
 
       - name: Download sources
         run: |
@@ -230,8 +125,8 @@ jobs:
         run: |
           mkdir -p out
           find bin/targets -maxdepth 6 -type f \
-            \( -name "*.img.gz" -o -name "*.img" -o -name "*.tar.gz" -o -name "*.iso" \
-               -o -name "*.itb" -o -name "*.bin" -o -name "profiles.json" -o -name "*.manifest" \) \
+            \( -name "*.img.gz" -o -name "*.img" -o -name "*.tar.gz" -o -name "*.itb" \
+               -o -name "*.bin" -o -name "profiles.json" -o -name "*.manifest" \) \
             -exec cp -v {} out/ \;
           ls -lh out
 
@@ -246,21 +141,19 @@ jobs:
 
       - name: Publish build log
         if: always()
+        env:
+          TARGET_ID: ${{ matrix.id }}
         run: |
           set +e
           mkdir -p ci-log
           if [ -f build.log ]; then
-            cp build.log "ci-log/build-${{ matrix.id }}.log"
+            cp build.log "ci-log/build-$TARGET_ID.log"
           else
-            echo "no build log was produced" > "ci-log/build-${{ matrix.id }}.log"
+            echo "no build log" > "ci-log/build-$TARGET_ID.log"
           fi
           git config user.name "mesh-ci-bot"
           git config user.email "mesh-ci-bot@users.noreply.github.com"
-          git checkout -B "ci-logs-${{ matrix.id }}"
-          git add -f "ci-log/build-${{ matrix.id }}.log"
-          git commit -m "ci: build log ${{ matrix.id }} (run ${GITHUB_RUN_ID})" || true
-          for i in 1 2 3; do
-            git fetch origin "ci-logs-${{ matrix.id }}" >/dev/null 2>&1 && git rebase "origin/ci-logs-${{ matrix.id }}" >/dev/null 2>&1
-            git push origin "HEAD:ci-logs-${{ matrix.id }}" && break
-            sleep 2
-          done
+          git checkout -B "ci-logs-$TARGET_ID"
+          git add -f "ci-log/build-$TARGET_ID.log"
+          git commit -m "ci: build log $TARGET_ID (run ${GITHUB_RUN_ID})" || true
+          git push --force origin "HEAD:ci-logs-$TARGET_ID"
