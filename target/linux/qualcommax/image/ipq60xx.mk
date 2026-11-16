@@ -215,6 +215,34 @@ define Device/tplink_eap625-outdoor-hd-v1
 endef
 TARGET_DEVICES += tplink_eap625-outdoor-hd-v1
 
+define Device/jdcloud_re-ss-01
+	$(call Device/FitImage)
+	$(call Device/EmmcImage)
+	DEVICE_VENDOR := JDCloud
+	DEVICE_MODEL := RE-SS-01
+	DEVICE_DTS_CONFIG := config@cp03-c2
+	SOC := ipq6000
+	BLOCKSIZE := 64k
+	KERNEL_SIZE := 6144k
+	DEVICE_PACKAGES := ath11k-firmware-ipq6018
+	SUPPORTED_DEVICES += jdcloud,re-ss-01
+endef
+TARGET_DEVICES += jdcloud_re-ss-01
+
+define Device/jdcloud_re-cs-02
+	$(call Device/FitImage)
+	$(call Device/EmmcImage)
+	DEVICE_VENDOR := JDCloud
+	DEVICE_MODEL := RE-CS-02
+	DEVICE_DTS_CONFIG := config@cp03-c3
+	SOC := ipq6010
+	BLOCKSIZE := 64k
+	KERNEL_SIZE := 6144k
+	DEVICE_PACKAGES := ath11k-firmware-ipq6018 ath11k-firmware-qcn9074 kmod-ath11k-pci
+	SUPPORTED_DEVICES += jdcloud,re-cs-02
+endef
+TARGET_DEVICES += jdcloud_re-cs-02
+
 define Device/yuncore_fap650
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
