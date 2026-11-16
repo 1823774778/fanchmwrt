@@ -63,7 +63,7 @@ local function collect()
 		backhaul      = st.backhaul,
 		aps           = aps,
 		clients       = clients,
-			ts            = os.time()
+		ts            = os.time()
 	}
 end
 
